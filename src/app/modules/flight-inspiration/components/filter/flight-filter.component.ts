@@ -23,9 +23,7 @@ export class FlightFilterComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.sub.add(
       this.form.valueChanges
-        .pipe(
-          filter((item) => item?.origin?.code),
-        )
+        .pipe(filter((item) => item?.origin?.code))
         .subscribe((resp) => {
           this.facade.setFilter(this.mapToParam(resp));
         })
@@ -49,12 +47,12 @@ export class FlightFilterComponent implements OnInit, OnDestroy {
   private getForm() {
     return this.fb.group({
       origin: [null, [Validators.required]],
-      departureDate: [],
+      departureDate: '',
       oneWay: false,
-      duration: [],
+      duration: '',
       nonStop: false,
-      maxPrice: [],
-      viewBy: [''],
+      maxPrice: '',
+      viewBy: '',
     });
   }
 

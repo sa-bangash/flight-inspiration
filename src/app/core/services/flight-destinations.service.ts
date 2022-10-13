@@ -16,7 +16,7 @@ export class FlightDestinationsService {
     return this.http
       .get('assets/mocks/flight-destinations.json', { params })
       .pipe(
-        delay(2000),
+        delay(1000),
         map((resp) => ({ ...resp }))
       ) as Observable<FlightDestinationsAPI>;
   }
