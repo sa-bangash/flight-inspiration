@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
+import { MatCardModule } from '@angular/material/card';
 
 const angularMaterialModules = [
   MatToolbarModule,
@@ -18,6 +19,7 @@ const angularMaterialModules = [
   MatDatepickerModule,
   MatNativeDateModule,
   MatSelectModule,
+  MatCardModule,
 ];
 
 const providers = [MatDatepickerModule, MatNativeDateModule];

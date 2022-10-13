@@ -1,3 +1,22 @@
-<p>{{ data.type }}</p>
-<p>{{ data.origin }}</p>
-<p>{{ data.destination }}</p>
+<mat-card class="flight-card">
+  <mat-card-title class="flight-card__title"
+    >${{ data.price.total }}</mat-card-title
+  >
+  <div class="flight-card__items">
+    <div class="flight-card__item">
+      <p class="flight-card__item-title">Departure</p>
+      <div class="flight-card__item-date">{{ data.departureDate }}</div>
+      <div class="flight-card__item-info">
+        <span>{{ data.origin }}</span> - <span>{{ data.destination }}</span>
+      </div>
+    </div>
+    <div class="flight-card__item-splitter"></div>
+    <div class="flight-card__item">
+      <p class="flight-card__item-title">Return</p>
+      <div class="flight-card__item-date">{{ data.returnDate }}</div>
+      <div class="flight-card__item-info">
+        <span>{{ data.destination }}</span> - <span>{{ data.origin }}</span>
+      </div>
+    </div>
+  </div>
+</mat-card>
