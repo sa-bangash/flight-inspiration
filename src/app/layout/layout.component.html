@@ -1,16 +1,11 @@
 <div class="main-wrapper">
-  <mat-toolbar class="toolbar">
+  <mat-toolbar class="toolbar" color="primary">
     <div class="menu">
-      <span routerLink="/home" routerLinkActive="active-link">Home</span>
-      <span routerLink="/flights-inspiration" routerLinkActive="active-link"
-        >Flight</span
-      >
+      <span routerLink="/home">Flight Inspiration </span>
     </div>
     <span class="dark-mode-wrapper">
       <mat-icon>brightness_5</mat-icon>
-      <mat-slide-toggle
-        [formControl]="darkCtrl"
-      ></mat-slide-toggle>
+      <mat-slide-toggle [formControl]="darkCtrl"></mat-slide-toggle>
       <mat-icon>bedtime</mat-icon>
     </span>
   </mat-toolbar>
