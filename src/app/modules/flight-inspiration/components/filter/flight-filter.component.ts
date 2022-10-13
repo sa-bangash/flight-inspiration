@@ -15,6 +15,7 @@ export class FlightFilterComponent implements OnInit, OnDestroy {
   form = this.getForm();
   viewByOption = ['DATE', 'DESTINATION', 'DURATION', 'WEEK', 'COUNTRY'];
   sub = new Subscription();
+  durationsOptions = new Array(15).fill(new Array(15)).map((_, idx) => ++idx);
   constructor(
     private fb: FormBuilder,
     private facade: FlightInspirationFilterFacade
@@ -38,6 +39,7 @@ export class FlightFilterComponent implements OnInit, OnDestroy {
     return {
       ...value,
       origin: value.origin.code,
+      duration: value.duration.toString(),
       ...(value.departureDate && {
         departureDate: format(value.departureDate, 'yyyy-MM-dd'),
       }),

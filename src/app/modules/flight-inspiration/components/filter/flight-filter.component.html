@@ -9,10 +9,17 @@
   </mat-form-field>
 
   <mat-form-field class="field" appearance="fill">
-    <!-- <mat-label>Trip Mode</mat-label> -->
     <mat-select formControlName="oneWay">
       <mat-option [value]="true">One way</mat-option>
       <mat-option [value]="false">Rount trip</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Duration</mat-label>
+    <mat-select formControlName="duration" multiple>
+      <mat-option *ngFor="let item of durationsOptions" [value]="item">{{
+        item
+      }}</mat-option>
     </mat-select>
   </mat-form-field>
   <mat-form-field class="field" appearance="fill">
@@ -23,7 +30,12 @@
   </mat-form-field>
   <mat-form-field class="field" appearance="fill">
     <mat-label>Max price</mat-label>
-    <input matInput placeholder="Enter max price" formControlName="maxPrice" />
+    <input
+      matInput
+      placeholder="Enter max price"
+      type="number"
+      formControlName="maxPrice"
+    />
   </mat-form-field>
   <mat-form-field class="field" appearance="fill">
     <mat-select formControlName="viewBy">
