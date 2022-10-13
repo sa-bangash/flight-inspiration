@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { filter, Subscription } from 'rxjs';
+import { FlightInspirationFilterFacade } from './stores/flight-inspiration-filter.facade';
 import { FlightInspirationFacade } from './stores/flight-inspiration.facade';
 
 @Component({
@@ -6,12 +8,27 @@ import { FlightInspirationFacade } from './stores/flight-inspiration.facade';
   templateUrl: './flight-inspiration.component.html',
   styleUrls: ['./flight-inspiration.component.scss'],
 })
-export class FlightInspirationComponent implements OnInit {
+export class FlightInspirationComponent implements OnInit, OnDestroy {
   data$ = this.facade.data$;
-  constructor(private facade: FlightInspirationFacade) {}
+  loading$ = this.facade.loading$;
+  sub = new Subscription();
+  filter$ = this.filterFacade.filter$;
+  constructor(
+    private facade: FlightInspirationFacade,
+    private filterFacade: FlightInspirationFilterFacade
+  ) {}
 
   ngOnInit(): void {
-    this.facade.load();
-    this.data$.subscribe((resp) => console.log(resp));
+    this.sub.add(
+      this.filter$
+        .pipe(filter((param) => !!param.origin))
+        .subscribe((filter) => {
+          this.facade.load(filter);
+        })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 }

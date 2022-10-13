@@ -2,5 +2,36 @@
   <app-flight-filter></app-flight-filter>
 </section>
 <section class="list">
-  <app-flight-list [data]="(data$ | async)?.data"></app-flight-list>
+  <ng-container
+    *ngIf="(filter$ | async).origin; else unSelectDeperatureTempRef"
+  >
+    <ng-container
+      *ngIf="loading$ | async as loading; then loadingRef; else listTempRef"
+    >
+    </ng-container>
+  </ng-container>
 </section>
+
+<ng-template #loadingRef>
+  <div class="non-list">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>
+
+<ng-template #listTempRef>
+  <ng-container *ngIf="(data$ | async)?.data as list">
+    <ng-container *ngIf="list?.length; else emptyList">
+      <app-flight-list [data]="list"></app-flight-list>
+    </ng-container>
+  </ng-container>
+</ng-template>
+
+<ng-template #emptyList>
+  <div class="non-list">No flight against this filter.</div>
+</ng-template>
+
+<ng-template #unSelectDeperatureTempRef>
+  <div class="non-list">
+    You need to set <span class="highlight"> deperature </span> filter.
+  </div>
+</ng-template>
