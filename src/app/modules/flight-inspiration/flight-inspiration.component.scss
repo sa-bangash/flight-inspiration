@@ -12,6 +12,12 @@
     margin-top: 30%;
     font-size: 20px;
     font-weight: 500;
+    @include xs {
+      font-size: 14px;
+    }
+    @include md {
+      font-size: 20px;
+    }
   }
   .list {
     width: 100%;
