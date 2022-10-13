@@ -37,8 +37,16 @@ $flight-inspiration-search-app-theme: mat.define-light-theme(
   )
 );
 
-$color-config: mat.get-color-config($mat-indigo);
-$primary-palette: map.get($color-config, "primary");
+$flight-inspiration-search-app-dark-theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: $flight-inspiration-search-app-primary,
+      accent: $flight-inspiration-search-app-accent,
+      warn: $flight-inspiration-search-app-warn,
+    ),
+  )
+);
+
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
@@ -55,12 +63,6 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-.responsive-color {
-  @include xs {
-    color: red;
-  }
-
-  @include md {
-    color: green;
-  }
+.dark-mode {
+  @include mat.all-component-colors($flight-inspiration-search-app-dark-theme);
 }

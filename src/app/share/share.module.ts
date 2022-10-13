@@ -10,6 +10,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatIconModule } from '@angular/material/icon';
 
 const angularMaterialModules = [
   MatToolbarModule,
@@ -22,6 +23,7 @@ const angularMaterialModules = [
   MatSelectModule,
   MatCardModule,
   MatProgressSpinnerModule,
+  MatIconModule,
 ];
 
 const providers = [MatDatepickerModule, MatNativeDateModule];

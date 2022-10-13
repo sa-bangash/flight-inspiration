@@ -6,8 +6,12 @@
         >Flight</span
       >
     </div>
-    <span>
-      <mat-slide-toggle [checked]="isDarkMode">Dark Mode</mat-slide-toggle>
+    <span class="dark-mode-wrapper">
+      <mat-icon>brightness_5</mat-icon>
+      <mat-slide-toggle
+        [formControl]="darkCtrl"
+      ></mat-slide-toggle>
+      <mat-icon>bedtime</mat-icon>
     </span>
   </mat-toolbar>
   <div class="main">

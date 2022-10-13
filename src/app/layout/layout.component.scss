@@ -1,20 +1,24 @@
 @import "../../styles.scss";
-:host {
-  .main-wrapper{
-    padding-bottom: 10px;
-  }
-  .menu {
-    display: flex;
-    gap: 10px;
-    cursor: pointer;
-  }
 
-  .toolbar {
-    justify-content: space-between;
-  }
+.main-wrapper {
+  padding-bottom: 10px;
+}
+.menu {
+  display: flex;
+  gap: 10px;
+  cursor: pointer;
+}
 
-  .active-link {
-    color: lightblue;
-  }
+.toolbar {
+  justify-content: space-between;
+}
 
+.active-link {
+  color: lightblue;
+}
+.dark-mode-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
 }
