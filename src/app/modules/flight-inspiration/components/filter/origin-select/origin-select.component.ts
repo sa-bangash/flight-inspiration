@@ -1,10 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  Input,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { FlightOrigin } from '@core/models/flight-origin.model';
 import { map, Observable } from 'rxjs';
@@ -17,7 +11,10 @@ import { map, Observable } from 'rxjs';
 export class OriginSelectComponent implements OnInit {
   @Input()
   form!: FormControl;
-  originOptions: FlightOrigin[] = [{ code: 'ISB', city: 'Islamabad' }];
+  originOptions: FlightOrigin[] = [
+    { code: 'ISB', city: 'Islamabad' },
+    { code: 'MAD', city: 'Madrid' },
+  ];
   filtered$!: Observable<FlightOrigin[]>;
   constructor() {}
 
