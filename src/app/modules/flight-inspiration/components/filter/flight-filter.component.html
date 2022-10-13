@@ -14,7 +14,7 @@
       <mat-option [value]="false">Rount trip</mat-option>
     </mat-select>
   </mat-form-field>
-  <mat-form-field appearance="fill">
+  <mat-form-field class="field" appearance="fill">
     <mat-label>Duration</mat-label>
     <mat-select formControlName="duration" multiple>
       <mat-option *ngFor="let item of durationsOptions" [value]="item">{{
