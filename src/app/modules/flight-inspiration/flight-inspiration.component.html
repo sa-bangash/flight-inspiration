@@ -1,0 +1,6 @@
+<section class="filter-wrapper">
+  <app-flight-filter></app-flight-filter>
+</section>
+<section class="cards-wrapper">
+  <app-flight-list [data]="(data$ | async)?.data"></app-flight-list>
+</section>

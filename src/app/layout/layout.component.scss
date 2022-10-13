@@ -1,0 +1,14 @@
+@import "../../styles.scss";
+.menu {
+  display: flex;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.toolbar {
+  justify-content: space-between;
+}
+
+.active-link {
+  color: lightblue;
+}

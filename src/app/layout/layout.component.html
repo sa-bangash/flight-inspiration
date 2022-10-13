@@ -1,0 +1,16 @@
+<div>
+  <mat-toolbar class="toolbar">
+    <div class="menu">
+      <span routerLink="/home" routerLinkActive="active-link">Home</span>
+      <span routerLink="/flights-inspiration" routerLinkActive="active-link"
+        >Flight</span
+      >
+    </div>
+    <span>
+      <mat-slide-toggle [checked]="isDarkMode">Dark Mode</mat-slide-toggle>
+    </span>
+  </mat-toolbar>
+  <div class="main">
+    <router-outlet></router-outlet>
+  </div>
+</div>

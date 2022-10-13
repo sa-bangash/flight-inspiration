@@ -1,0 +1,36 @@
+<form class="form-wrapper" [formGroup]="form">
+  <app-origin-select class="field" [form]="originCtrl"></app-origin-select>
+
+  <mat-form-field class="field" appearance="fill">
+    <mat-label>Departure Date</mat-label>
+    <input matInput [matDatepicker]="picker" formControlName="departureDate" />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field class="field" appearance="fill">
+    <!-- <mat-label>Trip Mode</mat-label> -->
+    <mat-select formControlName="oneWay">
+      <mat-option [value]="true">One way</mat-option>
+      <mat-option [value]="false">Rount trip</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="field" appearance="fill">
+    <mat-select formControlName="nonStop">
+      <mat-option [value]="true">Non stop</mat-option>
+      <mat-option [value]="false">Layover</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="field" appearance="fill">
+    <mat-label>Max price</mat-label>
+    <input matInput placeholder="Enter max price" formControlName="maxPrice" />
+  </mat-form-field>
+  <mat-form-field class="field" appearance="fill">
+    <mat-select formControlName="viewBy">
+      <mat-option value="">View by</mat-option>
+      <mat-option *ngFor="let option of viewByOption" [value]="option">{{
+        option
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</form>

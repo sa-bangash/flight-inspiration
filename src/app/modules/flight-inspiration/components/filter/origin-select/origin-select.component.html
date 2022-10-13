@@ -1,0 +1,15 @@
+<mat-form-field class="field" appearance="fill">
+  <mat-label>Departure</mat-label>
+  <input
+    type="text"
+    placeholder="Enter Departure"
+    matInput
+    [formControl]="form"
+    [matAutocomplete]="auto"
+  />
+  <mat-autocomplete [displayWith]="displayFn" #auto="matAutocomplete">
+    <mat-option *ngFor="let option of filtered$ | async" [value]="option">
+      {{ option.city }} ({{ option.code }})
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
