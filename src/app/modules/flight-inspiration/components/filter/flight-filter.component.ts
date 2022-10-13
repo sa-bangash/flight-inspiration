@@ -26,7 +26,6 @@ export class FlightFilterComponent implements OnInit, OnDestroy {
         .pipe(
           filter((item) => item?.origin?.code),
         )
-
         .subscribe((resp) => {
           this.facade.setFilter(this.mapToParam(resp));
         })
@@ -37,12 +36,12 @@ export class FlightFilterComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  mapToParam(resp: FilterForm): FlightDesginationParam {
+  mapToParam(value: FilterForm): FlightDesginationParam {
     return {
-      ...resp,
-      origin: resp.origin.code,
-      ...(resp.departureDate && {
-        departureDate: format(resp.departureDate, 'yyyy-MM-dd'),
+      ...value,
+      origin: value.origin.code,
+      ...(value.departureDate && {
+        departureDate: format(value.departureDate, 'yyyy-MM-dd'),
       }),
     };
   }

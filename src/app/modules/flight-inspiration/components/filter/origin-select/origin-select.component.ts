@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   Component,
   ElementRef,
   Input,
@@ -15,22 +14,17 @@ import { map, Observable } from 'rxjs';
   templateUrl: './origin-select.component.html',
   styleUrls: ['./origin-select.component.scss'],
 })
-export class OriginSelectComponent implements OnInit, AfterViewInit {
+export class OriginSelectComponent implements OnInit {
   @Input()
   form!: FormControl;
   originOptions: FlightOrigin[] = [{ code: 'ISB', city: 'Islamabad' }];
   filtered$!: Observable<FlightOrigin[]>;
-  @ViewChild('inputRef') inputRef: ElementRef<HTMLInputElement>;
   constructor() {}
 
   ngOnInit(): void {
     this.filtered$ = this.form.valueChanges.pipe(
       map((q: string) => this.filter(q))
     );
-  }
-
-  ngAfterViewInit(): void {
-    // this.inputRef.nativeElement.focus();
   }
 
   displayFn(value: FlightOrigin) {
