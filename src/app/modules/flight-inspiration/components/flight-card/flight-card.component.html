@@ -1,7 +1,7 @@
 <mat-card class="flight-card">
-  <mat-card-title class="flight-card__title"
-    >{{ data.price.total }}</mat-card-title
-  >
+  <mat-card-title class="flight-card__title">{{
+    data.price.total
+  }}</mat-card-title>
   <div class="flight-card__items">
     <div class="flight-card__item">
       <p class="flight-card__item-title">Departure</p>
@@ -10,8 +10,8 @@
         <span>{{ data.origin }}</span> - <span>{{ data.destination }}</span>
       </div>
     </div>
-    <div class="flight-card__item-splitter"></div>
-    <div class="flight-card__item">
+    <div class="flight-card__item-splitter" *ngIf="data.returnDate"></div>
+    <div class="flight-card__item" *ngIf="data.returnDate">
       <p class="flight-card__item-title">Return</p>
       <div class="flight-card__item-date">{{ data.returnDate }}</div>
       <div class="flight-card__item-info">
