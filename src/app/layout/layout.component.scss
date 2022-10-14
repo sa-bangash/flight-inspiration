@@ -3,6 +3,9 @@
 .main-wrapper {
   padding-bottom: 10px;
 }
+.main {
+  padding-top: 70px;
+}
 .menu {
   display: flex;
   gap: 10px;
@@ -11,6 +14,8 @@
 
 .toolbar {
   justify-content: space-between;
+  position: fixed;
+  z-index: 2;
 }
 
 .dark-mode-wrapper {
