@@ -39,7 +39,10 @@ export class FlightInspirationComponent implements OnInit, OnDestroy {
     );
   }
   onFilterShow() {
-    const filterComponent = this.dialog.open(FlightFilterContainer);
+    const filterComponent = this.dialog.open(FlightFilterContainer, {
+      disableClose: true,
+    });
+    filterComponent.componentInstance.isMobile$ = this.isMobile$;
   }
 
   ngOnDestroy(): void {

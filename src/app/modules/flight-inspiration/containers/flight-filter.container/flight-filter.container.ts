@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import FlightDesginationParam from '@core/models/flight-destination-param.model';
 import { format, isValid } from 'date-fns';
-import { take, withLatestFrom } from 'rxjs';
+import { BehaviorSubject, Observable, take, withLatestFrom } from 'rxjs';
 import { FlightFilterForm } from '../../models/flight-filter-form.model';
 import { FlightInspirationFilterFacade } from '../../stores/flight-inspiration-filter.facade';
 
@@ -11,9 +11,12 @@ import { FlightInspirationFilterFacade } from '../../stores/flight-inspiration-f
   styleUrls: ['./flight-filter.container.scss'],
 })
 export class FlightFilterContainer implements OnInit {
+  @Input()
+  isMobile$: Observable<boolean>;
+
   defaultFilterValue: Partial<FlightFilterForm>;
   citiesOption$ = this.facade.citiesoption$;
-
+  params: FlightDesginationParam;
   constructor(private facade: FlightInspirationFilterFacade) {}
 
   ngOnInit(): void {
@@ -21,7 +24,12 @@ export class FlightFilterContainer implements OnInit {
   }
 
   onFilterChange(value: FlightFilterForm) {
-    this.facade.setFilter(this.mapToParam(value));
+    this.params = this.mapToParam(value);
+    this.notify();
+  }
+
+  filterChangeOnMobile(value: FlightFilterForm) {
+    this.params = this.mapToParam(value);
   }
 
   mapToParam(value: FlightFilterForm): FlightDesginationParam {
@@ -37,7 +45,13 @@ export class FlightFilterContainer implements OnInit {
     };
   }
 
-  private setFilter() {
+  notify(): void {
+    if (this.params) {
+      this.facade.setFilter(this.params);
+    }
+  }
+
+  private setFilter(): void {
     this.facade.filter$
       .pipe(take(1), withLatestFrom(this.citiesOption$))
       .subscribe(([params, options]) => {

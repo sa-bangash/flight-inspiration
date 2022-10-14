@@ -1,5 +1,33 @@
-<app-flight-filter
-  [citiesOptions]="citiesOption$ | async"
-  [defaultValue]="defaultFilterValue"
-  (onValueChange)="onFilterChange($event)"
-></app-flight-filter>
+<ng-container *ngIf="isMobile$ | async; then mobileFilter; else desktopFilter">
+</ng-container>
+
+<ng-template #mobileFilter>
+  <mat-dialog-content
+    ><app-flight-filter
+      [citiesOptions]="citiesOption$ | async"
+      [defaultValue]="defaultFilterValue"
+      (onValueChange)="filterChangeOnMobile($event)"
+    ></app-flight-filter>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button
+      mat-raised-button
+      [mat-dialog-close]="true"
+      color="primary"
+      (click)="notify()"
+      [disabled]="!params"
+      cdkFocusInitial
+    >
+      Filter
+    </button>
+  </mat-dialog-actions>
+</ng-template>
+
+<ng-template #desktopFilter>
+  <app-flight-filter
+    [citiesOptions]="citiesOption$ | async"
+    [defaultValue]="defaultFilterValue"
+    (onValueChange)="onFilterChange($event)"
+  ></app-flight-filter>
+</ng-template>
