@@ -2,7 +2,7 @@ import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { filter, map, Subscription } from 'rxjs';
-import { FlightFilterComponent } from './components/filter/flight-filter.component';
+import { FlightFilterContainer } from './containers/flight-filter.container/flight-filter.container';
 import { FlightInspirationFilterFacade } from './stores/flight-inspiration-filter.facade';
 import { FlightInspirationFacade } from './stores/flight-inspiration.facade';
 
@@ -39,7 +39,7 @@ export class FlightInspirationComponent implements OnInit, OnDestroy {
     );
   }
   onFilterShow() {
-    const filterComponent = this.dialog.open(FlightFilterComponent);
+    const filterComponent = this.dialog.open(FlightFilterContainer);
   }
 
   ngOnDestroy(): void {

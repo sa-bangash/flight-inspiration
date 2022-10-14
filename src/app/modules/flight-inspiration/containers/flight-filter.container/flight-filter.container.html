@@ -1,0 +1,5 @@
+<app-flight-filter
+  [citiesOptions]="citiesOption$ | async"
+  [defaultValue]="defaultFilterValue"
+  (onValueChange)="onFilterChange($event)"
+></app-flight-filter>

@@ -1,10 +1,18 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import FlightDesginationParam from '@core/models/flight-destination-param.model';
-import { format, isValid } from 'date-fns';
 import { Subscription } from 'rxjs';
-import { filter, take, withLatestFrom } from 'rxjs/operators';
-import { FlightInspirationFilterFacade } from '../../stores/flight-inspiration-filter.facade';
+import { filter } from 'rxjs/operators';
+import {
+  FlightFilterForm,
+  CityOption,
+} from '../../models/flight-filter-form.model';
 
 @Component({
   selector: 'app-flight-filter',
@@ -12,43 +20,31 @@ import { FlightInspirationFilterFacade } from '../../stores/flight-inspiration-f
   styleUrls: ['./flight-filter.component.scss'],
 })
 export class FlightFilterComponent implements OnInit, OnDestroy {
+  @Input() defaultValue: Partial<FlightFilterForm> = null;
+  @Input() citiesOptions: CityOption[] = [];
+
+  @Output() onValueChange = new EventEmitter<FlightFilterForm>();
+
   form = this.getForm();
-  citiesOption$ = this.facade.citiesoption$;
   viewByOption = ['DATE', 'DESTINATION', 'DURATION', 'WEEK', 'COUNTRY'];
   sub = new Subscription();
-  durationsOptions = new Array(15).fill(new Array(15)).map((_, idx) => ++idx);
+  durationsOptions = new Array(15).fill(15).map((_, i) => i + 1);
 
-  constructor(
-    private fb: FormBuilder,
-    private facade: FlightInspirationFilterFacade
-  ) {}
+  constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
+    this.form.patchValue(this.defaultValue);
     this.sub.add(
       this.form.valueChanges
         .pipe(filter((item) => item?.origin?.code))
         .subscribe((resp) => {
-          this.facade.setFilter(this.mapToParam(resp));
+          this.onValueChange.next(resp);
         })
     );
-    this.setFilter();
   }
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
-  }
-
-  mapToParam(value: FilterForm): FlightDesginationParam {
-    return {
-      ...value,
-      origin: value.origin.code,
-      duration: value.duration.toString(),
-      ...(value.departureDate && {
-        departureDate: isValid(value.departureDate)
-          ? format(value.departureDate, 'yyyy-MM-dd')
-          : null,
-      }),
-    };
   }
 
   private getForm() {
@@ -66,31 +62,4 @@ export class FlightFilterComponent implements OnInit, OnDestroy {
   get originCtrl(): FormControl {
     return this.form.get('origin') as FormControl;
   }
-
-  private setFilter() {
-    this.facade.filter$
-      .pipe(take(1), withLatestFrom(this.citiesOption$))
-      .subscribe(([params, options]) => {
-        this.form.patchValue(
-          {
-            ...params,
-            origin: options.find((item) => item.code === params.origin),
-            duration: params.duration?.split(',').map((item) => +item) || [],
-            departureDate:
-              params.departureDate && new Date(params.departureDate),
-          },
-          { emitEvent: false }
-        );
-      });
-  }
-}
-
-interface FilterForm {
-  origin: { code: string; city: string };
-  departureDate: Date;
-  oneWay: boolean;
-  duration: string;
-  nonStop: boolean;
-  maxPrice: string;
-  viewBy: string;
 }

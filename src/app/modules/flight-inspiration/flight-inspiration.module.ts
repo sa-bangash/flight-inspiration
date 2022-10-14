@@ -8,6 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ShareModule } from '@share/share.module';
 import { OriginSelectComponent } from './components/filter/origin-select/origin-select.component';
 import { FlightListComponent } from './components/flight-list/flight-list.component';
+import { FlightFilterContainer } from './containers/flight-filter.container/flight-filter.container';
 
 const routes: Routes = [
   {
@@ -23,6 +24,7 @@ const routes: Routes = [
     FlightCardComponent,
     OriginSelectComponent,
     FlightListComponent,
+    FlightFilterContainer,
   ],
   imports: [
     CommonModule,
