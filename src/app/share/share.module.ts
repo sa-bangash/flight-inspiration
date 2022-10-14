@@ -12,6 +12,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { LayoutModule } from '@angular/cdk/layout';
 
 const angularMaterialModules = [
   MatToolbarModule,
@@ -26,6 +28,8 @@ const angularMaterialModules = [
   MatProgressSpinnerModule,
   MatIconModule,
   MatButtonModule,
+  MatDialogModule,
+  LayoutModule,
 ];
 
 const providers = [MatDatepickerModule, MatNativeDateModule];

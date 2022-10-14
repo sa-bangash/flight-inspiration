@@ -1,5 +1,9 @@
 <form class="form-wrapper" [formGroup]="form">
-  <app-origin-select class="field" [form]="originCtrl"></app-origin-select>
+  <app-origin-select
+    class="field"
+    [form]="originCtrl"
+    [options]="citiesOption$ | async"
+  ></app-origin-select>
 
   <mat-form-field class="field" appearance="fill">
     <mat-label>Departure Date</mat-label>

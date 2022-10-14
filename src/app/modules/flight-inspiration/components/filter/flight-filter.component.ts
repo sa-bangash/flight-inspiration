@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import FlightDesginationParam from '@core/models/flight-destination-param.model';
-import { format } from 'date-fns';
+import { format, isValid } from 'date-fns';
 import { Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged, filter } from 'rxjs/operators';
+import { filter, take, withLatestFrom } from 'rxjs/operators';
 import { FlightInspirationFilterFacade } from '../../stores/flight-inspiration-filter.facade';
 
 @Component({
@@ -13,9 +13,11 @@ import { FlightInspirationFilterFacade } from '../../stores/flight-inspiration-f
 })
 export class FlightFilterComponent implements OnInit, OnDestroy {
   form = this.getForm();
+  citiesOption$ = this.facade.citiesoption$;
   viewByOption = ['DATE', 'DESTINATION', 'DURATION', 'WEEK', 'COUNTRY'];
   sub = new Subscription();
   durationsOptions = new Array(15).fill(new Array(15)).map((_, idx) => ++idx);
+
   constructor(
     private fb: FormBuilder,
     private facade: FlightInspirationFilterFacade
@@ -29,6 +31,7 @@ export class FlightFilterComponent implements OnInit, OnDestroy {
           this.facade.setFilter(this.mapToParam(resp));
         })
     );
+    this.setFilter();
   }
 
   ngOnDestroy(): void {
@@ -41,7 +44,9 @@ export class FlightFilterComponent implements OnInit, OnDestroy {
       origin: value.origin.code,
       duration: value.duration.toString(),
       ...(value.departureDate && {
-        departureDate: format(value.departureDate, 'yyyy-MM-dd'),
+        departureDate: isValid(value.departureDate)
+          ? format(value.departureDate, 'yyyy-MM-dd')
+          : null,
       }),
     };
   }
@@ -60,6 +65,23 @@ export class FlightFilterComponent implements OnInit, OnDestroy {
 
   get originCtrl(): FormControl {
     return this.form.get('origin') as FormControl;
+  }
+
+  private setFilter() {
+    this.facade.filter$
+      .pipe(take(1), withLatestFrom(this.citiesOption$))
+      .subscribe(([params, options]) => {
+        this.form.patchValue(
+          {
+            ...params,
+            origin: options.find((item) => item.code === params.origin),
+            duration: params.duration?.split(',').map((item) => +item) || [],
+            departureDate:
+              params.departureDate && new Date(params.departureDate),
+          },
+          { emitEvent: false }
+        );
+      });
   }
 }
 

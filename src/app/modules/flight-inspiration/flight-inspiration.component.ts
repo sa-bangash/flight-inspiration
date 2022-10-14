@@ -1,5 +1,8 @@
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { filter, Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { filter, map, Subscription } from 'rxjs';
+import { FlightFilterComponent } from './components/filter/flight-filter.component';
 import { FlightInspirationFilterFacade } from './stores/flight-inspiration-filter.facade';
 import { FlightInspirationFacade } from './stores/flight-inspiration.facade';
 
@@ -13,9 +16,17 @@ export class FlightInspirationComponent implements OnInit, OnDestroy {
   loading$ = this.facade.loading$;
   sub = new Subscription();
   filter$ = this.filterFacade.filter$;
+
+  isMobile$ = this.breakpointObserver.observe(['(max-width: 719px)']).pipe(
+    map((state: BreakpointState) => {
+      return state.matches;
+    })
+  );
   constructor(
     private facade: FlightInspirationFacade,
-    private filterFacade: FlightInspirationFilterFacade
+    private filterFacade: FlightInspirationFilterFacade,
+    private dialog: MatDialog,
+    public breakpointObserver: BreakpointObserver
   ) {}
 
   ngOnInit(): void {
@@ -26,6 +37,9 @@ export class FlightInspirationComponent implements OnInit, OnDestroy {
           this.facade.load(filter);
         })
     );
+  }
+  onFilterShow() {
+    const filterComponent = this.dialog.open(FlightFilterComponent);
   }
 
   ngOnDestroy(): void {

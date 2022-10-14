@@ -11,10 +11,8 @@ import { map, Observable } from 'rxjs';
 export class OriginSelectComponent implements OnInit {
   @Input()
   form!: FormControl;
-  originOptions: FlightOrigin[] = [
-    { code: 'ISB', city: 'Islamabad' },
-    { code: 'MAD', city: 'Madrid' },
-  ];
+  @Input()
+  options: FlightOrigin[] = [];
   filtered$!: Observable<FlightOrigin[]>;
   constructor() {}
 
@@ -32,10 +30,10 @@ export class OriginSelectComponent implements OnInit {
   private filter(value: string): FlightOrigin[] {
     if (typeof value === 'string') {
       const filterValue = value?.toLowerCase();
-      return this.originOptions.filter((option) =>
+      return this.options.filter((option) =>
         option.city.toLowerCase().includes(filterValue)
       );
     }
-    return this.originOptions;
+    return this.options;
   }
 }

@@ -1,6 +1,9 @@
-<section class="filter-wrapper">
-  <app-flight-filter></app-flight-filter>
-</section>
+<ng-container *ngIf="!(isMobile$ | async); else filterButtonRef">
+  <section class="filter-wrapper">
+    <app-flight-filter></app-flight-filter>
+  </section>
+</ng-container>
+
 <section class="list">
   <ng-container
     *ngIf="(filter$ | async).origin; else unSelectDeperatureTempRef"
@@ -11,6 +14,18 @@
     </ng-container>
   </ng-container>
 </section>
+
+<ng-template #filterButtonRef>
+  <button
+    mat-fab
+    color="primary"
+    aria-label="icon button for filter"
+    class="filter-button"
+    (click)="onFilterShow()"
+  >
+    <mat-icon>more_vert</mat-icon>
+  </button>
+</ng-template>
 
 <ng-template #loadingRef>
   <div class="non-list">
